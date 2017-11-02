@@ -151,6 +151,10 @@ static const void *kPBInfiniteScrollStateKey = &kPBInfiniteScrollStateKey;
 
 @end
 
+@protocol UITableView_InfiniteScrollable
+    - (void) infinite_shouldScrollToRowAtIndexPath:(NSIndexPath *)indexPath atScrollPosition:(UITableViewScrollPosition)scrollPosition animated:(BOOL)animated;
+@end
+
 @implementation UIScrollView (InfiniteScroll)
 
 #pragma mark - Public methods
@@ -674,8 +678,13 @@ static const void *kPBInfiniteScrollStateKey = &kPBInfiniteScrollStateKey;
             if(lastSection >= 0 && lastRow >= 0) {
                 NSIndexPath *indexPath = [NSIndexPath indexPathForRow:lastRow inSection:lastSection];
                 UITableViewScrollPosition scrollPos = reveal ? UITableViewScrollPositionTop : UITableViewScrollPositionBottom;
-                
-                [tableView scrollToRowAtIndexPath:indexPath atScrollPosition:scrollPos animated:YES];
+
+                if([self conformsToProtocol:@protocol(UITableView_InfiniteScrollable)]) {
+                    id<UITableView_InfiniteScrollable> impl = (id<UITableView_InfiniteScrollable>) self;
+                    [impl infinite_shouldScrollToRowAtIndexPath:indexPath atScrollPosition:scrollPos animated:YES];
+                } else {
+                    [tableView scrollToRowAtIndexPath:indexPath atScrollPosition:scrollPos animated:YES];
+                }
                 
                 // explicit return
                 return;
