@@ -102,6 +102,13 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 /**
+ *  Allow developers to implement their own way of calling scrollToRowAtIndexPath:(NSIndexPath *)indexPath atScrollPosition:(UITableViewScrollPosition)scrollPosition animated:(BOOL)animated
+ */
+@protocol UITableView_InfiniteScrollable
+- (void) infinite_shouldScrollToRowAtIndexPath:(NSIndexPath *)indexPath atScrollPosition:(UITableViewScrollPosition)scrollPosition animated:(BOOL)animated;
+@end
+
+/**
  Convenience interface for UIScrollView+InfiniteScroll category.
  */
 @interface UITableView (InfiniteScrollConvenienceInterface)

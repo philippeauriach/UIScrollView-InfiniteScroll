@@ -151,10 +151,6 @@ static const void *kPBInfiniteScrollStateKey = &kPBInfiniteScrollStateKey;
 
 @end
 
-@protocol UITableView_InfiniteScrollable
-    - (void) infinite_shouldScrollToRowAtIndexPath:(NSIndexPath *)indexPath atScrollPosition:(UITableViewScrollPosition)scrollPosition animated:(BOOL)animated;
-@end
-
 @implementation UIScrollView (InfiniteScroll)
 
 #pragma mark - Public methods
